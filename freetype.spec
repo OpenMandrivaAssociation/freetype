@@ -59,7 +59,7 @@ Tools to manipulate TTF fonts.
 %patch3 -p0
 %patch4 -p1 -b .no-intl
 
-autoconf2.1
+autoconf-2.13
 
 %build
 %configure --disable-debug \
