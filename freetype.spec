@@ -1,5 +1,5 @@
 %define version 1.3.1
-%define release %mkrel 25
+%define release %mkrel 26
 
 Summary:	Free TrueType font rasterizer library.
 Name:		freetype
@@ -15,7 +15,7 @@ Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Source:		freetype-%{version}.tar.bz2
 Source1:	ttmkfdir.tar.bz2
 # Patch from X-TT sources, to correctly support Dynalab TTF fonts
-# very poppular in Taiwan
+# very popular in Taiwan
 Patch:		freetype1.3-adw-nocheck.patch
 Patch1:		freetype-1.3.1-compile-self.patch
 # (gb) Disable byte-code interpreter
@@ -101,5 +101,4 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root,-)
 %{_bindir}/*
 %{_sbindir}/*
-
 
