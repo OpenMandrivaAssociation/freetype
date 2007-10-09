@@ -1,7 +1,7 @@
 %define version 1.3.1
 %define release %mkrel 26
 
-Summary:	Free TrueType font rasterizer library.
+Summary:	Free TrueType font rasterizer library
 Name:		freetype
 Version:	%{version}
 Release:	%{release}
@@ -26,7 +26,7 @@ Patch3:		freetype-1.3.1-gcc33.patch
 Patch4:		freetype-1.3.1-no-intl.patch
 
 %package devel
-Summary:	Header files and static library for development with FreeType.
+Summary:	Header files and static library for development with FreeType
 Group:		Development/C
 Requires:	%{name} = %{version}-%{release}
 
