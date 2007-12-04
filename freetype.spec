@@ -7,7 +7,7 @@ Version:	%{version}
 Release:	%{release}
 License:	BSD
 Group:		System/Libraries
-BuildRequires:	XFree86-devel
+BuildRequires:	X11-devel
 BuildRequires:	autoconf2.1
 URL:		http://www.freetype.org
 Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
