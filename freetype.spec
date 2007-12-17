@@ -10,7 +10,6 @@ Group:		System/Libraries
 BuildRequires:	X11-devel
 BuildRequires:	autoconf2.1
 URL:		http://www.freetype.org
-Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 Source:		freetype-%{version}.tar.bz2
 Source1:	ttmkfdir.tar.bz2
