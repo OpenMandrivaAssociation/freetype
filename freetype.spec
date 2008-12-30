@@ -1,5 +1,5 @@
 %define version 1.3.1
-%define release %mkrel 29
+%define release %mkrel 30
 
 Summary:	TrueType font rasterizer library
 Name:		freetype
@@ -24,6 +24,7 @@ Patch2:		freetype-1.3.1-disable-bci.patch
 Patch3:		freetype-1.3.1-gcc33.patch
 # (abel) no need to include libintl
 Patch4:		freetype-1.3.1-no-intl.patch
+Patch5:		freetype-1.3.1-format_not_a_string_literal_and_no_format_arguments.diff
 
 %package devel
 Summary:	Header files and static library for development with FreeType
@@ -58,6 +59,7 @@ Tools to manipulate TTF fonts.
 %patch2 -p1 -b .disable-bci
 %patch3 -p0
 %patch4 -p1 -b .no-intl
+%patch5 -p0 -b .format_not_a_string_literal_and_no_format_arguments
 
 autoconf-2.13
 
@@ -67,7 +69,7 @@ autoconf-2.13
 	--enable-shared \
 	--with-locale-dir=%{_datadir}/locale
 make
-make -C ttmkfdir-1.1
+make -C ttmkfdir-1.1 
 
 %install
 rm -rf $RPM_BUILD_ROOT
