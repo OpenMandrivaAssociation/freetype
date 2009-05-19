@@ -64,7 +64,7 @@ Tools to manipulate TTF fonts.
 autoconf-2.13
 
 %build
-%configure --disable-debug \
+%configure2_5x --disable-debug \
 	--enable-static \
 	--enable-shared \
 	--with-locale-dir=%{_datadir}/locale
