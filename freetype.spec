@@ -1,5 +1,5 @@
 %define version 1.3.1
-%define release %mkrel 32
+%define release %mkrel 33
 
 Summary:	TrueType font rasterizer library
 Name:		freetype
@@ -7,7 +7,7 @@ Version:	%{version}
 Release:	%{release}
 License:	BSD
 Group:		System/Libraries
-BuildRequires:	X11-devel
+BuildRequires:	libsm-devel libx11-devel libice-devel
 BuildRequires:	autoconf2.1
 URL:		http://www.freetype.org
 Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
