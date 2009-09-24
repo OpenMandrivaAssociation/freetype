@@ -8,7 +8,7 @@ Release:	%{release}
 License:	BSD
 Group:		System/Libraries
 BuildRequires:	libsm-devel libx11-devel libice-devel
-BuildRequires:	autoconf2.1
+BuildRequires:	autoconf2.1 automake1.4
 URL:		http://www.freetype.org
 Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
