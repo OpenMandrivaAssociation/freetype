@@ -1,5 +1,5 @@
 %define version 1.3.1
-%define release %mkrel 33
+%define release %mkrel 34
 
 Summary:	TrueType font rasterizer library
 Name:		freetype
@@ -60,6 +60,9 @@ Tools to manipulate TTF fonts.
 %patch3 -p0
 %patch4 -p1 -b .no-intl
 %patch5 -p0 -b .format_not_a_string_literal_and_no_format_arguments
+
+cp -f /usr/share/automake-1.4/config.guess .
+cp -f /usr/share/automake-1.4/config.sub .
 
 autoconf-2.13
 
