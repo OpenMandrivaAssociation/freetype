@@ -1,5 +1,5 @@
 %define version 1.3.1
-%define release %mkrel 34
+%define release %mkrel 35
 
 Summary:	TrueType font rasterizer library
 Name:		freetype
