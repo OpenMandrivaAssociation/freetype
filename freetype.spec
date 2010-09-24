@@ -1,10 +1,7 @@
-%define version 1.3.1
-%define release %mkrel 35
-
 Summary:	TrueType font rasterizer library
 Name:		freetype
-Version:	%{version}
-Release:	%{release}
+Version:	1.3.1
+Release:	%mkrel 36
 License:	BSD
 Group:		System/Libraries
 BuildRequires:	libsm-devel libx11-devel libice-devel
@@ -13,11 +10,9 @@ URL:		http://www.freetype.org
 Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 Source:		freetype-%{version}.tar.bz2
-Source1:	ttmkfdir.tar.bz2
 # Patch from X-TT sources, to correctly support Dynalab TTF fonts
 # very popular in Taiwan
-Patch:		freetype1.3-adw-nocheck.patch
-Patch1:		freetype-1.3.1-compile-self.patch
+Patch0:		freetype1.3-adw-nocheck.patch
 # (gb) Disable byte-code interpreter
 Patch2:		freetype-1.3.1-disable-bci.patch
 # (nanar) fix gcc33 build, included in cvs version
@@ -29,11 +24,6 @@ Patch5:		freetype-1.3.1-format_not_a_string_literal_and_no_format_arguments.diff
 %package devel
 Summary:	Header files and static library for development with FreeType
 Group:		Development/C
-Requires:	%{name} = %{version}-%{release}
-
-%package tools
-Summary:	Tools to manipulate TTF fonts
-Group:		System/Fonts/True type
 Requires:	%{name} = %{version}-%{release}
 
 %description
@@ -48,14 +38,10 @@ compile applications which rely on the FreeType library.
 If you simply want to run existing applications, you won't
 need this package.
 
-%description tools
-Tools to manipulate TTF fonts.
-
 %prep
-%setup -q -a 1
+%setup -q
 
-%patch -p0 -b .adw
-%patch1 -p0
+%patch0 -p0 -b .adw
 %patch2 -p1 -b .disable-bci
 %patch3 -p0
 %patch4 -p1 -b .no-intl
@@ -72,14 +58,13 @@ autoconf-2.13
 	--enable-shared \
 	--with-locale-dir=%{_datadir}/locale
 make
-make -C ttmkfdir-1.1 
 
 %install
 rm -rf $RPM_BUILD_ROOT
 %makeinstall gnulocaledir=$RPM_BUILD_ROOT%{_datadir}/locale
-make -C ttmkfdir-1.1 install
-ln -sf %{_sbindir}/ttmkfdir $RPM_BUILD_ROOT%{_bindir}/ttmkfdir
+
 rm -f $RPM_BUILD_ROOT%{_bindir}/ft*
+
 %find_lang %name
 
 %clean
@@ -105,9 +90,3 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libttf.so
 %{_libdir}/libttf.la
 %{_libdir}/libttf.a
-
-%files tools
-%defattr(-,root,root,-)
-%{_bindir}/*
-%{_sbindir}/*
-
