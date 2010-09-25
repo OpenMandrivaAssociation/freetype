@@ -5,7 +5,7 @@
 Summary:	TrueType font rasterizer library
 Name:		freetype
 Version:	1.3.1
-Release:	%mkrel 1
+Release:	%mkrel 37
 License:	BSD
 Group:		System/Libraries
 BuildRequires:	libsm-devel libx11-devel libice-devel
@@ -33,7 +33,8 @@ stand-alone application, though some utility applications are included.
 %package -n	%{libname}
 Summary:	Shared libraries for a free and portable TrueType font rendering engine
 Group:		System/Libraries
-Obsoletes:	%{name} < %{version}-37
+Obsoletes:	%{name}
+Provides:	%{name} = %{version}-%{release}
 
 %description -n	%{libname}
 The FreeType engine is a free and portable TrueType font rendering engine.
