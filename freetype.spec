@@ -1,15 +1,17 @@
+%define major 2
+%define libname	%mklibname freetype %{major}
+%define develname %mklibname -d freetype %{major}
+
 Summary:	TrueType font rasterizer library
 Name:		freetype
 Version:	1.3.1
-Release:	%mkrel 36
+Release:	%mkrel 1
 License:	BSD
 Group:		System/Libraries
 BuildRequires:	libsm-devel libx11-devel libice-devel
 BuildRequires:	autoconf2.1 automake1.4
 URL:		http://www.freetype.org
-Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
-
-Source:		freetype-%{version}.tar.bz2
+Source0:		freetype-%{version}.tar.bz2
 # Patch from X-TT sources, to correctly support Dynalab TTF fonts
 # very popular in Taiwan
 Patch0:		freetype1.3-adw-nocheck.patch
@@ -20,11 +22,7 @@ Patch3:		freetype-1.3.1-gcc33.patch
 # (abel) no need to include libintl
 Patch4:		freetype-1.3.1-no-intl.patch
 Patch5:		freetype-1.3.1-format_not_a_string_literal_and_no_format_arguments.diff
-
-%package devel
-Summary:	Header files and static library for development with FreeType
-Group:		Development/C
-Requires:	%{name} = %{version}-%{release}
+Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 The FreeType engine is a free and portable TrueType font rendering engine.
@@ -32,15 +30,32 @@ It has been developed to provide TT support to a great variety of
 platforms and environments. Note that FreeType is a library, not a
 stand-alone application, though some utility applications are included.
 
-%description devel
-This package is only needed if you intend to develop or
-compile applications which rely on the FreeType library.
-If you simply want to run existing applications, you won't
-need this package.
+%package -n	%{libname}
+Summary:	Shared libraries for a free and portable TrueType font rendering engine
+Group:		System/Libraries
+Obsoletes:	%{name} < %{version}-37
+
+%description -n	%{libname}
+The FreeType engine is a free and portable TrueType font rendering engine.
+It has been developed to provide TT support to a great variety of
+platforms and environments. Note that FreeType is a library, not a
+stand-alone application, though some utility applications are included.
+
+%package -n	%{develname}
+Summary:	Header files and static library for development with FreeType2
+Group:		Development/C
+Requires:	%{libname} = %{version}
+Obsoletes:	%{name}-devel
+Provides:	%{name}-devel = %{version}-%{release}
+
+%description -n %{develname}
+This package is only needed if you intend to develop or compile applications
+which rely on the FreeType library. If you simply want to run existing
+applications, you won't need this package.
 
 %prep
-%setup -q
 
+%setup -q
 %patch0 -p0 -b .adw
 %patch2 -p1 -b .disable-bci
 %patch3 -p0
@@ -60,30 +75,30 @@ autoconf-2.13
 make
 
 %install
-rm -rf $RPM_BUILD_ROOT
-%makeinstall gnulocaledir=$RPM_BUILD_ROOT%{_datadir}/locale
+rm -rf %{buildroot}
 
-rm -f $RPM_BUILD_ROOT%{_bindir}/ft*
+%makeinstall gnulocaledir=%{buildroot}%{_datadir}/locale
+
+rm -f %{buildroot}%{_bindir}/ft*
 
 %find_lang %name
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %if %mdkversion < 200900
-%post -p /sbin/ldconfig
+%post -n %{libname} -p /sbin/ldconfig
 %endif
-
 %if %mdkversion < 200900
-%postun -p /sbin/ldconfig
+%postun -n %{libname} -p /sbin/ldconfig
 %endif
 
-%files -f %name.lang
-%defattr(-,root,root,-)
-%{_libdir}/libttf.so.*
+%files -n %{libname} -f %name.lang
+%defattr(-, root, root)
 %doc README announce
+%{_libdir}/*.so.%{major}*
 
-%files devel
+%files -n %{develname}
 %defattr(-,root,root,-)
 %doc docs
 %{_includedir}/*
