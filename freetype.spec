@@ -5,7 +5,7 @@
 Summary:	TrueType font rasterizer library
 Name:		freetype
 Version:	1.3.1
-Release:	%mkrel 37
+Release:	%mkrel 38
 License:	BSD
 Group:		System/Libraries
 BuildRequires:	libsm-devel libx11-devel libice-devel
