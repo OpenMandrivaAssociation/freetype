@@ -5,7 +5,7 @@
 Summary:	TrueType font rasterizer library
 Name:		freetype
 Version:	1.3.1
-Release:	%mkrel 38
+Release:	39
 License:	BSD
 Group:		System/Libraries
 BuildRequires:	libsm-devel libx11-devel libice-devel
@@ -22,7 +22,6 @@ Patch3:		freetype-1.3.1-gcc33.patch
 # (abel) no need to include libintl
 Patch4:		freetype-1.3.1-no-intl.patch
 Patch5:		freetype-1.3.1-format_not_a_string_literal_and_no_format_arguments.diff
-Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 The FreeType engine is a free and portable TrueType font rendering engine.
@@ -45,7 +44,7 @@ stand-alone application, though some utility applications are included.
 %package -n	%{develname}
 Summary:	Header files and static library for development with FreeType2
 Group:		Development/C
-Requires:	%{libname} = %{version}
+Requires:	%{libname} >= %{version}-%{release}
 Obsoletes:	%{name}-devel
 Provides:	%{name}-devel = %{version}-%{release}
 
@@ -70,7 +69,7 @@ autoconf-2.13
 
 %build
 %configure2_5x --disable-debug \
-	--enable-static \
+	--disable-static \
 	--enable-shared \
 	--with-locale-dir=%{_datadir}/locale
 make
@@ -84,25 +83,14 @@ rm -f %{buildroot}%{_bindir}/ft*
 
 %find_lang %name
 
-%clean
-rm -rf %{buildroot}
-
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
+# cleanup
+rm -f %{buildroot}%{_libdir}/*.*a
 
 %files -n %{libname} -f %name.lang
-%defattr(-, root, root)
 %doc README announce
 %{_libdir}/*.so.%{major}*
 
 %files -n %{develname}
-%defattr(-,root,root,-)
 %doc docs
 %{_includedir}/*
 %{_libdir}/libttf.so
-%{_libdir}/libttf.la
-%{_libdir}/libttf.a
