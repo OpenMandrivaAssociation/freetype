@@ -1,0 +1,67 @@
+
+As noted in the freetype-2.4.7 release and consists of:
+
+Slightly improve LZW_CLEAR handling.
+http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=487913d9a6355b21cc1cbb73dbf93e64d081e715
+
+Add explicit LZW decompression stack size limit.
+http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=83cb6c0049f6cc5ea3f27d1d90891472f288ac5e
+
+Protect against loops in the prefix table.
+http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=86c3c69c15dfc46238e2e0822876982b21aa53f9
+
+--- src/lzw/ftzopen.c	2009-07-31 16:45:18.000000000 +0000
++++ src/lzw/ftzopen.c.oden	2011-10-21 05:36:25.000000000 +0000
+@@ -124,6 +124,15 @@
+         old_size     = 0;
+       }
+ 
++      /* requirement of the character stack larger than 1<<LZW_MAX_BITS */
++      /* implies bug in the decompression code                          */
++      if ( new_size > ( 1 << LZW_MAX_BITS ) )
++      {
++        new_size = 1 << LZW_MAX_BITS;
++        if ( new_size == old_size )
++          return -1;
++      }
++
+       if ( FT_RENEW_ARRAY( state->stack, old_size, new_size ) )
+         return -1;
+ 
+@@ -279,7 +288,7 @@
+                            : state->max_free + 1;
+ 
+         c = ft_lzwstate_get_code( state );
+-        if ( c < 0 )
++        if ( c < 0 || c > 255 )
+           goto Eof;
+ 
+         old_code = old_char = (FT_UInt)c;
+@@ -312,11 +321,12 @@
+           /* why not LZW_FIRST-256 ? */
+           state->free_ent  = ( LZW_FIRST - 1 ) - 256;
+           state->buf_clear = 1;
+-          c = ft_lzwstate_get_code( state );
+-          if ( c < 0 )
+-            goto Eof;
+ 
+-          code = (FT_UInt)c;
++          /* not quite right, but at least more predictable */
++          old_code = 0;
++          old_char = 0;
++
++          goto NextCode;
+         }
+ 
+         in_code = code; /* save code for later */
+@@ -326,6 +336,10 @@
+           /* special case for KwKwKwK */
+           if ( code - 256U >= state->free_ent )
+           {
++            /* corrupted LZW stream */
++            if ( code - 256U > state->free_ent )
++              goto Eof;
++
+             FTLZW_STACK_PUSH( old_char );
+             code = old_code;
+           }

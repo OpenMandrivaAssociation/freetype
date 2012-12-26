@@ -1,0 +1,11 @@
+--- graph/x11/rules.mk	2009-03-14 14:58:28.000000000 +0100
++++ graph/x11/rules.mk.oden	2010-07-16 16:19:49.055725764 +0200
+@@ -77,7 +77,7 @@ ifneq ($(X11_PATH),)
+   ifeq ($(PLATFORM),unix)
+     GRAPH_LINK += $(X11_LIB:%=-R%)
+   endif
+-  GRAPH_LINK += $(X11_LIB:%=-L%) -lX11
++  GRAPH_LINK += $(X11_LIB:%=-L%) -lX11 -lm
+ 
+   # Solaris needs a -lsocket in GRAPH_LINK.
+   #
