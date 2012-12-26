@@ -114,7 +114,13 @@ export CFLAGS="`echo %{optflags} |sed s/O2/O0/`"
 %make
 
 pushd ft2demos-%{version}
-%make X11_PATH=%{_prefix} TOP_DIR=".."
+# The purpose of overriding LINK_LIBRARY is getting rid of ****ing
+# rpath
+%make TOP_DIR=".." X11_LIB="" \
+LINK_LIBRARY='$(LIBTOOL) --mode=link $(CCraw) -o $@ $(OBJECTS_LIST) \
+                          -version-info $(version_info) \
+                           $(LDFLAGS) -no-undefined \
+                           # -export-symbols $(EXPORTS_LIST)'
 popd
 
 %install
