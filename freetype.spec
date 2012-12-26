@@ -102,6 +102,8 @@ popd
 perl -pi -e 's|^/\* #define FT_CONFIG_OPTION_SUBPIXEL_RENDERING \*/| #define FT_CONFIG_OPTION_SUBPIXEL_RENDERING|' include/freetype/config/ftoption.h
 %endif
 
+./autogen.sh --help || :
+
 %build
 # some apps crash on ppc without this
 %ifarch ppc
