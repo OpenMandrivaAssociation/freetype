@@ -1,9 +1,9 @@
-%define build_subpixel 1
-%define build_plf 1
+%define build_subpixel 0
+%define build_plf 0
 %{?_with_plf: %global build_plf 1}
 %{?_with_subpixel: %global build_subpixel 1}
 
-%define release 1
+%define release 2
 %if %build_plf
 %define distsuffix plf
 # make EVR of plf build higher than regular to allow update, needed with rpm5 mkrel
