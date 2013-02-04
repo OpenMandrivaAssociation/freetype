@@ -102,7 +102,7 @@ popd
 perl -pi -e 's|^/\* #define FT_CONFIG_OPTION_SUBPIXEL_RENDERING \*/| #define FT_CONFIG_OPTION_SUBPIXEL_RENDERING|' include/freetype/config/ftoption.h
 %endif
 
-./autogen.sh --help || :
+#./autogen.sh --help || :
 
 %build
 # some apps crash on ppc without this
@@ -110,7 +110,13 @@ perl -pi -e 's|^/\* #define FT_CONFIG_OPTION_SUBPIXEL_RENDERING \*/| #define FT_
 export CFLAGS="`echo %{optflags} |sed s/O2/O0/`"
 %endif
 
-%configure2_5x
+%configure2_5x	\
+		--disable-static
+
+# (tpg) remove rpath
+sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' builds/unix/libtool
+sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' builds/unix/libtool
+
 %make
 
 pushd ft2demos-%{version}
@@ -137,7 +143,7 @@ for ftdemo in ftbench ftdiff ftdump ftgamma ftgrid ftlint ftmulti ftstring ftval
 done
 
 # cleanup
-rm -fr %{buildroot}%{_libdir}/*.a
+rm -fr %{buildroot}%{_libdir}/*.{a,la}
 
 %files -n %{libname}
 %{_libdir}/*.so.%{major}*
