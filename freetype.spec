@@ -3,7 +3,7 @@
 %{?_with_plf: %global build_plf 1}
 %{?_with_subpixel: %global build_subpixel 1}
 
-%define release 2
+%define release 3
 %if %build_plf
 %define distsuffix plf
 # make EVR of plf build higher than regular to allow update, needed with rpm5 mkrel
@@ -35,8 +35,8 @@ Patch1:		freetype-2.4.2-CVE-2010-3311.patch
 BuildRequires:	zlib-devel
 BuildRequires:	pkgconfig
 BuildRequires:	libx11-devel
-Provides:	freetype2 = %EVRD
-Obsoletes:	freetype2 < %EVRD
+#Provides:	freetype2 = %EVRD
+#Obsoletes:	freetype2 < %EVRD
 
 %description
 The FreeType2 engine is a free and portable TrueType font rendering engine.
@@ -54,6 +54,7 @@ Summary:	Shared libraries for a free and portable TrueType font rendering engine
 Group:		System/Libraries
 Obsoletes:	%{name} < %{version}-%{release}
 Provides:	%{name} = %{version}-%{release}
+Provides:	freetype2 = 2.4.11-3
 
 %description -n %{libname}
 The FreeType2 engine is a free and portable TrueType font rendering
