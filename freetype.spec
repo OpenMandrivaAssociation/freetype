@@ -18,8 +18,8 @@
 
 Summary:	A free and portable TrueType font rendering engine
 Name:		freetype
-Version:	2.4.11
-Release:	3%{?extrarelsuffix}
+Version:	2.4.12
+Release:	1%{?extrarelsuffix}
 License:	FreeType License/GPLv2
 Group:		System/Libraries
 Url:		http://www.freetype.org/
