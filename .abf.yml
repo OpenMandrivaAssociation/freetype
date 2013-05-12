@@ -1,14 +1,7 @@
-removed_sources:
-  freetype-2.4.11.tar.gz: a8373512281f74a53713904050e0d71c026bf5cf
-  freetype-doc-2.4.11.tar.gz: 96670c09338404011403b86fc9352848ea997e77
-  ft2demos-2.4.11.tar.gz: 99365eaa6ccdbc0729ce24f778393b912ac9b8e9
 sources:
-  freetype-2.4.11.tar.gz.sig: 7819484be3af0020f56305da6eeb2fe6e8cf8b0b
   freetype-2.4.12.tar.gz: 12b92f9e8e7bd3abb39e82ce055ac98560cda8fa
   freetype-2.4.12.tar.gz.sig: fdaff4f3bd7f1fde97491f15968384e250705b9f
-  freetype-doc-2.4.11.tar.gz.sig: d2e74648f5433f3670903c4a23f3e054d0e1f40a
   freetype-doc-2.4.12.tar.gz: 80812862d3b6cb9be7fffe03335b61b108e8f63f
   freetype-doc-2.4.12.tar.gz.sig: 52c889472e2a5d4f7437dc7936da7562fbd6206b
-  ft2demos-2.4.11.tar.gz.sig: 9e4aaf3c62677ab6f964d4cbb97c07748122fe2c
   ft2demos-2.4.12.tar.gz: 66ba9f62401a080073f35d455cc965edb53547f0
   ft2demos-2.4.12.tar.gz.sig: ae39cf0fa14d36e38f9bee7deb0f02cefbf9d336

@@ -19,7 +19,7 @@
 Summary:	A free and portable TrueType font rendering engine
 Name:		freetype
 Version:	2.4.12
-Release:	1%{?extrarelsuffix}
+Release:	2%{?extrarelsuffix}
 License:	FreeType License/GPLv2
 Group:		System/Libraries
 Url:		http://www.freetype.org/
@@ -31,6 +31,7 @@ Source4:	http://mirrors.zerg.biz/nongnu/freetype/ft2demos-%{version}.tar.gz
 Source5:	http://mirrors.zerg.biz/nongnu/freetype/ft2demos-%{version}.tar.gz.sig
 Patch0:		ft2demos-2.3.12-mathlib.diff
 Patch1:		freetype-2.4.2-CVE-2010-3311.patch
+Patch2:		freetype-2.4.12-enable-adobe-cff-engine.patch
 
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(zlib)
@@ -92,6 +93,7 @@ pushd ft2demos-%{version}
 popd
 
 %patch1 -p1 -b .CVE-2010-3311
+%patch2 -p1 -b .cff~
 
 %if %{build_subpixel}
 sed -i -e 's|^/\* #define FT_CONFIG_OPTION_SUBPIXEL_RENDERING \*/| #define FT_CONFIG_OPTION_SUBPIXEL_RENDERING|' include/freetype/config/ftoption.h

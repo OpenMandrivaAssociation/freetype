@@ -1,0 +1,11 @@
+--- freetype-2.4.12/src/cff/cffobjs.c.bero	2013-05-12 14:45:50.339376916 +0200
++++ freetype-2.4.12/src/cff/cffobjs.c	2013-05-12 14:45:56.734296968 +0200
+@@ -1056,7 +1056,7 @@
+ 
+ 
+     /* set default property values */
+-    driver->hinting_engine    = FT_CFF_HINTING_FREETYPE;
++    driver->hinting_engine    = FT_CFF_HINTING_ADOBE;
+     driver->no_stem_darkening = FALSE;
+ 
+     return FT_Err_Ok;
