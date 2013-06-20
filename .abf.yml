@@ -1,6 +1,8 @@
-sources:
+removed_sources:
   freetype-2.4.12.tar.gz: 12b92f9e8e7bd3abb39e82ce055ac98560cda8fa
+sources:
   freetype-2.4.12.tar.gz.sig: fdaff4f3bd7f1fde97491f15968384e250705b9f
+  freetype-2.5.0.1.tar.gz: 2d539b375688466a8e7dcc4260ab21003faab08c
   freetype-doc-2.4.12.tar.gz: 80812862d3b6cb9be7fffe03335b61b108e8f63f
   freetype-doc-2.4.12.tar.gz.sig: 52c889472e2a5d4f7437dc7936da7562fbd6206b
   ft2demos-2.4.12.tar.gz: 66ba9f62401a080073f35d455cc965edb53547f0

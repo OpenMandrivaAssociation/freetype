@@ -18,20 +18,20 @@
 
 Summary:	A free and portable TrueType font rendering engine
 Name:		freetype
-Version:	2.4.12
-Release:	2%{?extrarelsuffix}
+Version:	2.5.0.1
+%define docver %(echo %version |cut -d. -f1-3)
+Release:	1%{?extrarelsuffix}
 License:	FreeType License/GPLv2
 Group:		System/Libraries
 Url:		http://www.freetype.org/
 Source0:	http://mirrors.zerg.biz/nongnu/freetype/%{name}-%{version}.tar.gz
 Source1:	http://mirrors.zerg.biz/nongnu/freetype/%{name}-%{version}.tar.gz.sig
-Source2:	http://mirrors.zerg.biz/nongnu/freetype/%{name}-doc-%{version}.tar.gz
-Source3:	http://mirrors.zerg.biz/nongnu/freetype/%{name}-doc-%{version}.tar.gz.sig
-Source4:	http://mirrors.zerg.biz/nongnu/freetype/ft2demos-%{version}.tar.gz
-Source5:	http://mirrors.zerg.biz/nongnu/freetype/ft2demos-%{version}.tar.gz.sig
+Source2:	http://mirrors.zerg.biz/nongnu/freetype/%{name}-doc-%{docver}.tar.gz
+Source3:	http://mirrors.zerg.biz/nongnu/freetype/%{name}-doc-%{docver}.tar.gz.sig
+Source4:	http://mirrors.zerg.biz/nongnu/freetype/ft2demos-%{docver}.tar.gz
+Source5:	http://mirrors.zerg.biz/nongnu/freetype/ft2demos-%{docver}.tar.gz.sig
 Patch0:		ft2demos-2.3.12-mathlib.diff
 Patch1:		freetype-2.4.2-CVE-2010-3311.patch
-Patch2:		freetype-2.4.12-enable-adobe-cff-engine.patch
 
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(zlib)
@@ -86,18 +86,18 @@ demos package includes a set of useful small utilities showing various
 capabilities of the FreeType library.
 
 %prep
-%setup -qn freetype-%{version} -a2 -a4
+%setup -q -a2 -a4
 
-pushd ft2demos-%{version}
+pushd ft2demos-%{docver}
 %patch0 -p0
 popd
 
 %patch1 -p1 -b .CVE-2010-3311
-%patch2 -p1 -b .cff~
 
 %if %{build_subpixel}
 sed -i -e 's|^/\* #define FT_CONFIG_OPTION_SUBPIXEL_RENDERING \*/| #define FT_CONFIG_OPTION_SUBPIXEL_RENDERING|' include/freetype/config/ftoption.h
 %endif
+sed -i -e 's/#define CFF_CONFIG_OPTION_OLD_ENGINE/#undef CFF_CONFIG_OPTION_OLD_ENGINE/' devel/ftoption.h
 
 #./autogen.sh --help || :
 
@@ -116,7 +116,7 @@ sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' builds/unix/libt
 
 %make
 
-pushd ft2demos-%{version}
+pushd ft2demos-%{docver}
 # The purpose of overriding LINK_LIBRARY is getting rid of ****ing
 # rpath
 %make TOP_DIR=".." X11_LIB="" \
@@ -136,7 +136,7 @@ popd
 install -d %{buildroot}%{_bindir}
 
 for ftdemo in ftbench ftdiff ftdump ftgamma ftgrid ftlint ftmulti ftstring ftvalid ftview; do
-	builds/unix/libtool --mode=install install -m 755 ft2demos-%{version}/bin/$ftdemo %{buildroot}%{_bindir}
+	builds/unix/libtool --mode=install install -m 755 ft2demos-%{docver}/bin/$ftdemo %{buildroot}%{_bindir}
 done
 
 %files -n %{libname}
