@@ -35,7 +35,7 @@ Patch1:		freetype-2.4.2-CVE-2010-3311.patch
 
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(zlib)
-BuildRequires:	pkgconfig(bzip2)
+BuildRequires:	bzip2-devel
 BuildRequires:	pkgconfig(libpng)
 
 %description
