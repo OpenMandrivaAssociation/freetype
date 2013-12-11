@@ -18,9 +18,9 @@
 
 Summary:	A free and portable TrueType font rendering engine
 Name:		freetype
-Version:	2.5.0.1
+Version:	2.5.2
 %define docver %(echo %version |cut -d. -f1-3)
-Release:	2%{?extrarelsuffix}
+Release:	1%{?extrarelsuffix}
 License:	FreeType License/GPLv2
 Group:		System/Libraries
 Url:		http://www.freetype.org/
@@ -133,7 +133,7 @@ popd
 
 %multiarch_binaries %{buildroot}%{_bindir}/freetype-config
 
-%multiarch_includes %{buildroot}%{_includedir}/freetype2/freetype/config/ftconfig.h
+%multiarch_includes %{buildroot}%{_includedir}/freetype2/config/ftconfig.h
 
 install -d %{buildroot}%{_bindir}
 
@@ -150,7 +150,6 @@ done
 %{_libdir}/*.so
 %dir %{_includedir}/freetype2
 %{_includedir}/freetype2/*
-%{_includedir}/ft2build.h
 %{_datadir}/aclocal/*
 %{_libdir}/pkgconfig/*
 %{multiarch_bindir}/freetype-config
