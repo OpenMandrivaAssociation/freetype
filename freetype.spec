@@ -151,6 +151,7 @@ ln -sf freetype2 %{buildroot}%{_includedir}/freetype
 %doc docs/*
 %{_bindir}/freetype-config
 %{_libdir}/*.so
+%{_includedir}/freetype
 %dir %{_includedir}/freetype2
 %{_includedir}/freetype2/*
 %{_datadir}/aclocal/*
