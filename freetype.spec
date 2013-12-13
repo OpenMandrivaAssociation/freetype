@@ -20,7 +20,7 @@ Summary:	A free and portable TrueType font rendering engine
 Name:		freetype
 Version:	2.5.2
 %define docver %(echo %version |cut -d. -f1-3)
-Release:	1%{?extrarelsuffix}
+Release:	2%{?extrarelsuffix}
 License:	FreeType License/GPLv2
 Group:		System/Libraries
 Url:		http://www.freetype.org/
@@ -140,6 +140,9 @@ install -d %{buildroot}%{_bindir}
 for ftdemo in ftbench ftdiff ftdump ftgamma ftgrid ftlint ftmulti ftstring ftvalid ftview; do
 	builds/unix/libtool --mode=install install -m 755 ft2demos-%{docver}/bin/$ftdemo %{buildroot}%{_bindir}
 done
+
+# compatibility symlink
+ln -sf freetype2 %{buildroot}%{_includedir}/freetype
 
 %files -n %{libname}
 %{_libdir}/libfreetype.so.%{major}*
