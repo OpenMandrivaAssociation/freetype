@@ -1,4 +1,4 @@
 sources:
-  freetype-2.5.3.tar.gz: d4a17b42505b23dab022f877e1849940aa3b64f3
-  freetype-doc-2.5.3.tar.gz: e85d3c3f8e2b2674cbca62f3f04cfc1c3e1dd68e
-  ft2demos-2.5.3.tar.gz: 75d2b29482c00d4b0c3f451bfeff0321d53e5845
+  freetype-2.5.4.tar.gz: e2731e7a083efbeb46247b699aa9722438deeb5e
+  ft2demos-2.5.4.tar.gz: 5bcb27843c63906c474515850fd5f54fc5f84343
+  freetype-doc-2.5.4.tar.gz: 2f7a0ce121f766256010fcb0356afafe15eaf6f3

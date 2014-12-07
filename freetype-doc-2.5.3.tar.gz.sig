@@ -1,7 +1,0 @@
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.19 (GNU/Linux)
-
-iD8DBQBTGVCNwaYOrOcH/aURAkkyAJ9H5fUsRzuAhmF7lEri4Q68+nmXHACfX8Aj
-m2xKoQrqKj0RefVvx0mLbjI=
-=2+Gz
------END PGP SIGNATURE-----
