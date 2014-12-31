@@ -1,7 +1,0 @@
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.19 (GNU/Linux)
-
-iD8DBQBUg2HVwaYOrOcH/aURApDtAJsHh14KJ+4LSVfi8D+ajki5EcTD+QCggcPD
-5+JK3GTwAxKs1I15/IEI7bg=
-=dcso
------END PGP SIGNATURE-----
