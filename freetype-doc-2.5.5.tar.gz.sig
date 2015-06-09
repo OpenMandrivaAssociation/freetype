@@ -1,7 +1,0 @@
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.19 (GNU/Linux)
-
-iD8DBQBUoxwTwaYOrOcH/aURAr72AJ9Pwma9Vnwx8SYTzuOTRjehVg7tFwCfZ9jE
-SMA1R8ISzIPa7wgnXiFl6GY=
-=RoFT
------END PGP SIGNATURE-----

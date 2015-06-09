@@ -18,18 +18,18 @@
 
 Summary:	A free and portable TrueType font rendering engine
 Name:		freetype
-Version:	2.5.5
+Version:	2.6
 %define docver %(echo %version |cut -d. -f1-3)
 Release:	1%{?extrarelsuffix}
 License:	FreeType License/GPLv2
 Group:		System/Libraries
 Url:		http://www.freetype.org/
-Source0:	http://mirrors.zerg.biz/nongnu/freetype/%{name}-%{version}.tar.gz
-Source1:	http://mirrors.zerg.biz/nongnu/freetype/%{name}-%{version}.tar.gz.sig
-Source2:	http://mirrors.zerg.biz/nongnu/freetype/%{name}-doc-%{docver}.tar.gz
-Source3:	http://mirrors.zerg.biz/nongnu/freetype/%{name}-doc-%{docver}.tar.gz.sig
-Source4:	http://mirrors.zerg.biz/nongnu/freetype/ft2demos-%{docver}.tar.gz
-Source5:	http://mirrors.zerg.biz/nongnu/freetype/ft2demos-%{docver}.tar.gz.sig
+Source0:	http://download.savannah.gnu.org/releases/freetype/%{name}-%{version}.tar.gz
+Source1:	http://download.savannah.gnu.org/releases/freetype/%{name}-%{version}.tar.gz.sig
+Source2:	http://download.savannah.gnu.org/releases/freetype/%{name}-doc-%{docver}.tar.gz
+Source3:	http://download.savannah.gnu.org/releases/freetype/%{name}-doc-%{docver}.tar.gz.sig
+Source4:	http://download.savannah.gnu.org/releases/freetype/ft2demos-%{docver}.tar.gz
+Source5:	http://download.savannah.gnu.org/releases/freetype/ft2demos-%{docver}.tar.gz.sig
 Patch0:		ft2demos-2.3.12-mathlib.diff
 Patch1:		freetype-2.4.2-CVE-2010-3311.patch
 
