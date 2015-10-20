@@ -130,7 +130,7 @@ popd
 
 %multiarch_binaries %{buildroot}%{_bindir}/freetype-config
 
-%multiarch_includes %{buildroot}%{_includedir}/freetype2/config/ftconfig.h
+%multiarch_includes %{buildroot}%{_includedir}/freetype/config/ftconfig.h
 
 install -d %{buildroot}%{_bindir}
 
