@@ -10,7 +10,7 @@
 %define build_subpixel 1
 %endif
 
-%define major	6
+%define major 6
 %define libname	%mklibname freetype %{major}
 %define devname %mklibname -d freetype %{major}
 
@@ -18,18 +18,15 @@
 
 Summary:	A free and portable TrueType font rendering engine
 Name:		freetype
-Version:	2.6
+Version:	2.6.1
 %define docver %(echo %version |cut -d. -f1-3)
 Release:	1%{?extrarelsuffix}
 License:	FreeType License/GPLv2
 Group:		System/Libraries
 Url:		http://www.freetype.org/
-Source0:	http://download.savannah.gnu.org/releases/freetype/%{name}-%{version}.tar.gz
-Source1:	http://download.savannah.gnu.org/releases/freetype/%{name}-%{version}.tar.gz.sig
-Source2:	http://download.savannah.gnu.org/releases/freetype/%{name}-doc-%{docver}.tar.gz
-Source3:	http://download.savannah.gnu.org/releases/freetype/%{name}-doc-%{docver}.tar.gz.sig
-Source4:	http://download.savannah.gnu.org/releases/freetype/ft2demos-%{docver}.tar.gz
-Source5:	http://download.savannah.gnu.org/releases/freetype/ft2demos-%{docver}.tar.gz.sig
+Source0:	http://download.savannah.gnu.org/releases/freetype/%{name}-%{version}.tar.bz2
+Source1:	http://download.savannah.gnu.org/releases/freetype/%{name}-doc-%{version}.tar.bz2
+Source2:	http://download.savannah.gnu.org/releases/freetype/ft2demos-%{version}.tar.bz2
 Patch0:		ft2demos-2.3.12-mathlib.diff
 Patch1:		freetype-2.4.2-CVE-2010-3311.patch
 
@@ -88,9 +85,9 @@ demos package includes a set of useful small utilities showing various
 capabilities of the FreeType library.
 
 %prep
-%setup -q -a2 -a4
+%setup -q -a1 -a2
 
-pushd ft2demos-%{docver}
+pushd ft2demos-%{version}
 %patch0 -p0
 popd
 
@@ -109,7 +106,7 @@ sed -i -e 's/#define CFF_CONFIG_OPTION_OLD_ENGINE/#undef CFF_CONFIG_OPTION_OLD_E
 export CFLAGS="`echo %{optflags} |sed s/O2/O0/`"
 %endif
 
-%configure2_5x \
+%configure \
 	--disable-static
 
 # (tpg) remove rpath
@@ -118,7 +115,7 @@ sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' builds/unix/libt
 
 %make
 
-pushd ft2demos-%{docver}
+pushd ft2demos-%{version}
 # The purpose of overriding LINK_LIBRARY is getting rid of ****ing
 # rpath
 %make TOP_DIR=".." X11_LIB="" \
