@@ -18,15 +18,15 @@
 
 Summary:	A free and portable TrueType font rendering engine
 Name:		freetype
-Version:	2.6.5
+Version:	2.7
 %define docver %(echo %version |cut -d. -f1-3)
 Release:	1%{?extrarelsuffix}
 License:	FreeType License/GPLv2
 Group:		System/Libraries
 Url:		http://www.freetype.org/
-Source0:	http://download.savannah.gnu.org/releases/freetype/%{name}-%{version}.tar.bz2
-Source1:	http://download.savannah.gnu.org/releases/freetype/%{name}-doc-%{version}.tar.bz2
-Source2:	http://download.savannah.gnu.org/releases/freetype/ft2demos-%{version}.tar.bz2
+Source0:	http://downloads.sourceforge.net/freetype/%{name}-%{version}.tar.bz2
+Source1:	http://downloads.sourceforge.net/freetype/%{name}-doc-%{version}.tar.bz2
+Source2:	http://downloads.sourceforge.net/freetype/ft2demos-%{version}.tar.bz2
 Patch0:		ft2demos-2.3.12-mathlib.diff
 Patch1:		freetype-2.4.2-CVE-2010-3311.patch
 
