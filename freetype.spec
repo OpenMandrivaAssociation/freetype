@@ -129,10 +129,6 @@ popd
 %install
 %makeinstall_std
 
-%multiarch_binaries %{buildroot}%{_bindir}/freetype-config
-
-%multiarch_includes %{buildroot}%{_includedir}/freetype2/freetype/config/ftconfig.h
-
 install -d %{buildroot}%{_bindir}
 
 for ftdemo in ftbench ftdiff ftdump ftgamma ftgrid ftlint ftmulti ftstring ftvalid ftview; do
@@ -154,9 +150,6 @@ ln -sf freetype2 %{buildroot}%{_includedir}/freetype
 %{_includedir}/freetype2/*
 %{_datadir}/aclocal/*
 %{_libdir}/pkgconfig/*
-%{multiarch_bindir}/freetype-config
-%dir %{multiarch_includedir}/freetype2
-%{multiarch_includedir}/freetype2/*
 %{_mandir}/man1/freetype-config.1*
 
 %files demos
