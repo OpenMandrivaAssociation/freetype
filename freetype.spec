@@ -1,18 +1,7 @@
-%define build_subpixel 0
-%define build_plf 0
-%{?_with_plf: %global build_plf 1}
-%{?_with_subpixel: %global build_subpixel 1}
-
-%if %build_plf
-%define distsuffix plf
-# make EVR of plf build higher than regular to allow update, needed with rpm5 mkrel
-#%define extrarelsuffix plf
-%define build_subpixel 1
-%endif
-
 %define major 6
 %define libname	%mklibname freetype %{major}
 %define devname %mklibname -d freetype %{major}
+%global optflags %{optflags} -fvisibility=hidden
 
 %define git_url git://git.sv.gnu.org/freetype/freetype2.git
 
@@ -20,7 +9,7 @@ Summary:	A free and portable TrueType font rendering engine
 Name:		freetype
 Version:	2.8
 %define docver %(echo %version |cut -d. -f1-3)
-Release:	1%{?extrarelsuffix}
+Release:	2
 License:	FreeType License/GPLv2
 Group:		System/Libraries
 Url:		http://www.freetype.org/
@@ -35,17 +24,13 @@ BuildRequires:	pkgconfig(zlib)
 BuildRequires:	bzip2-devel
 BuildRequires:	pkgconfig(libpng)
 BuildRequires:	pkgconfig(harfbuzz)
+BuildRequires:	pkgconfig(graphite2)
 
 %description
 The FreeType2 engine is a free and portable TrueType font rendering engine.
 It has been developed to provide TT support to a great variety of
 platforms and environments. Note that FreeType2 is a library, not a
 stand-alone application, though some utility applications are included
-%if %{build_plf}
-
-This package is in PLF because this build has subpixel hinting enabled which
-is covered by software patents.
-%endif
 
 %package -n %{libname}
 Summary:	Shared libraries for a free and portable TrueType font rendering engine
@@ -58,11 +43,6 @@ engine.  It has been developed to provide TT support to a great
 variety of platforms and environments. Note that FreeType2 is a
 library, not a stand-alone application, though some utility
 applications are included
-%if %{build_plf}
-
-This package is in PLF because this build has subpixel hinting enabled which
-is covered by software patents.
-%endif
 
 %package -n %{devname}
 Summary:	Header files and static library for development with FreeType2
@@ -94,22 +74,40 @@ popd
 
 %patch1 -p1 -b .CVE-2010-3311
 
-%if %{build_subpixel}
-sed -i -e 's|^/\* #define FT_CONFIG_OPTION_SUBPIXEL_RENDERING \*/| #define FT_CONFIG_OPTION_SUBPIXEL_RENDERING|' include/freetype/config/ftoption.h
-%endif
-sed -i -e 's/#define CFF_CONFIG_OPTION_OLD_ENGINE/#undef CFF_CONFIG_OPTION_OLD_ENGINE/' devel/ftoption.h
-
-#./autogen.sh --help || :
-
-%build
-# some apps crash on ppc without this
-%ifarch ppc
-export CFLAGS="`echo %{optflags} |sed s/O2/O0/`"
-%endif
+enable() {
+	if [ "$#" = "1" ]; then
+		KEY=FT_CONFIG_OPTION_${1}
+	else
+		KEY=${1}_CONFIG_OPTION_${2}
+	fi
+	sed -i -e "s|^/\* #define ${KEY} \*/|#define ${KEY} 1|" include/freetype/config/ftoption.h devel/ftoption.h
+}
+disable() {
+	if [ "$#" = "1" ]; then
+		KEY=FT_CONFIG_OPTION_${1}
+	else
+		KEY=${1}_CONFIG_OPTION_${2}
+	fi
+	sed -i -e "s|^#define ${KEY}\$|/* #define ${KEY} */|" include/freetype/config/ftoption.h devel/ftoption.h
+}
 
 %configure \
 	--disable-static
 
+enable SUBPIXEL_RENDERING
+enable SYSTEM_ZLIB
+enable USE_BZIP2
+enable USE_PNG
+enable USE_HARFBUZZ
+enable PCF LONG_FAMILY_NAMES
+
+disable CFF OLD_ENGINE
+
+sed -i -e 's,^/\* #define FT_EXPORT_DEF(x).*,#define FT_EXPORT_DEF(x) __attribute__((visibility("default"))) x,' include/freetype/config/ftoption.h devel/ftoption.h
+
+#./autogen.sh --help || :
+
+%build
 # (tpg) remove rpath
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' builds/unix/libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' builds/unix/libtool
