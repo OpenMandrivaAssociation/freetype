@@ -1,4 +1,4 @@
 sources:
-  freetype-2.8.tar.bz2: 42c6b1f733fe13a3eba135f5025b22cb68450f91
-  freetype-doc-2.8.tar.bz2: 5b221ee14fe674cd5f6db0193d55360bc0bd3655
-  ft2demos-2.8.tar.bz2: 7849f1ac4a352971fab61a5fc2e5c6a597201201
+  freetype-2.8.1.tar.bz2: 417bb3747c4ac95b6f2652024a53fad45581fa1c
+  freetype-doc-2.8.1.tar.bz2: 9ee079ee02e6b6895802104f58cd5e5be517dce7
+  ft2demos-2.8.1.tar.bz2: 7fbae5708cc5edc97279f2a9db1b369d7ec619b6
