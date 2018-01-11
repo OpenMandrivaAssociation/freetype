@@ -1,13 +1,12 @@
 %define major 6
 %define libname	%mklibname freetype %{major}
 %define devname %mklibname -d freetype %{major}
-%global optflags %{optflags} -fvisibility=hidden
 
 %define git_url git://git.sv.gnu.org/freetype/freetype2.git
 
 Summary:	A free and portable TrueType font rendering engine
 Name:		freetype
-Version:	2.8.1
+Version:	2.9
 %define docver %(echo %version |cut -d. -f1-3)
 Release:	1
 License:	FreeType License/GPLv2
@@ -91,8 +90,7 @@ disable() {
 	sed -i -e "s|^#define ${KEY}\$|/* #define ${KEY} */|" include/freetype/config/ftoption.h devel/ftoption.h
 }
 
-%configure \
-	--disable-static
+%configure
 
 enable SUBPIXEL_RENDERING
 enable SYSTEM_ZLIB
