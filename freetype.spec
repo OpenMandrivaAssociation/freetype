@@ -3,6 +3,7 @@
 %define devname %mklibname -d freetype %{major}
 
 %define git_url git://git.sv.gnu.org/freetype/freetype2.git
+%bcond_with	harfbuzz
 
 Summary:	A free and portable TrueType font rendering engine
 Name:		freetype
@@ -18,11 +19,18 @@ Source2:	http://downloads.sourceforge.net/freetype/ft2demos-%{version}.tar.bz2
 Patch0:		ft2demos-2.3.12-mathlib.diff
 Patch1:		freetype-2.4.2-CVE-2010-3311.patch
 
+Patch2:		0001-Enable-table-validation-modules.patch
+Patch3:		0002-Enable-infinality-subpixel-hinting.patch
+Patch4:		0003-Enable-long-PCF-family-names.patch
+Patch5:		0001-psaux-Correctly-handle-Flex-features-52846.patch
+
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(zlib)
 BuildRequires:	bzip2-devel
 BuildRequires:	pkgconfig(libpng)
+%if %{with harfbuzz}
 BuildRequires:	pkgconfig(harfbuzz)
+%endif
 BuildRequires:	pkgconfig(graphite2)
 
 %description
@@ -72,6 +80,10 @@ pushd ft2demos-%{version}
 popd
 
 %patch1 -p1 -b .CVE-2010-3311
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 enable() {
 	if [ "$#" = "1" ]; then
