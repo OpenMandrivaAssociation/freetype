@@ -1,4 +1,4 @@
 sources:
-  freetype-2.9.tar.bz2: 94c4399b1a55c5892812e732843fcb4a7c2fe657
-  freetype-doc-2.9.tar.bz2: 63e171aa5b2c46e7bece3ae7781015380d012e1f
-  ft2demos-2.9.tar.bz2: bd8a5d17274f987284e6f934722fb7715d00892e
+  freetype-2.9.1.tar.bz2: 220c82062171c513e4017c523d196933c9de4a7d
+  freetype-doc-2.9.1.tar.bz2: bb6c973f9fef972ad4ecc03bc09ed676b8dc0d59
+  ft2demos-2.9.1.tar.bz2: 45704d7b75c4f9fdd6a9b3787918e8220b36aa77

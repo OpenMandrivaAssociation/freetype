@@ -7,9 +7,9 @@
 
 Summary:	A free and portable TrueType font rendering engine
 Name:		freetype
-Version:	2.9
+Version:	2.9.1
 %define docver %(echo %version |cut -d. -f1-3)
-Release:	2
+Release:	1
 License:	FreeType License/GPLv2
 Group:		System/Libraries
 Url:		http://www.freetype.org/
@@ -22,7 +22,6 @@ Patch1:		freetype-2.4.2-CVE-2010-3311.patch
 Patch2:		0001-Enable-table-validation-modules.patch
 Patch3:		0002-Enable-infinality-subpixel-hinting.patch
 Patch4:		0003-Enable-long-PCF-family-names.patch
-Patch5:		0001-psaux-Correctly-handle-Flex-features-52846.patch
 
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(zlib)
@@ -83,7 +82,6 @@ popd
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
 
 enable() {
 	if [ "$#" = "1" ]; then
@@ -151,14 +149,12 @@ ln -sf freetype2 %{buildroot}%{_includedir}/freetype
 
 %files -n %{devname}
 %doc docs/*
-%{_bindir}/freetype-config
 %{_libdir}/*.so
 %{_includedir}/freetype
 %dir %{_includedir}/freetype2
 %{_includedir}/freetype2/*
 %{_datadir}/aclocal/*
 %{_libdir}/pkgconfig/*
-%{_mandir}/man1/freetype-config.1*
 
 %files demos
 %{_bindir}/ftbench
