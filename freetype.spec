@@ -156,6 +156,7 @@ ln -sf freetype2 %{buildroot}%{_includedir}/freetype
 %{_includedir}/freetype2/*
 %{_datadir}/aclocal/*
 %{_libdir}/pkgconfig/*
+%{_mandir}/man1/freetype-config.1*
 
 %files demos
 %{_bindir}/ftbench
