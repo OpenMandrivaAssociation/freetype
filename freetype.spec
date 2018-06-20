@@ -9,7 +9,7 @@ Summary:	A free and portable TrueType font rendering engine
 Name:		freetype
 Version:	2.9.1
 %define docver %(echo %version |cut -d. -f1-3)
-Release:	1
+Release:	2
 License:	FreeType License/GPLv2
 Group:		System/Libraries
 Url:		http://www.freetype.org/
@@ -100,7 +100,7 @@ disable() {
 	sed -i -e "s|^#define ${KEY}\$|/* #define ${KEY} */|" include/freetype/config/ftoption.h devel/ftoption.h
 }
 
-%configure
+%configure --enable-freetype-config
 
 enable SUBPIXEL_RENDERING
 enable SYSTEM_ZLIB
@@ -149,6 +149,7 @@ ln -sf freetype2 %{buildroot}%{_includedir}/freetype
 
 %files -n %{devname}
 %doc docs/*
+%{_bindir}/freetype-config
 %{_libdir}/*.so
 %{_includedir}/freetype
 %dir %{_includedir}/freetype2
