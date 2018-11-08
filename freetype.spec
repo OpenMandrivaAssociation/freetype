@@ -9,18 +9,17 @@ Summary:	A free and portable TrueType font rendering engine
 Name:		freetype
 Version:	2.9.1
 %define docver %(echo %version |cut -d. -f1-3)
-Release:	3
+Release:	4
 License:	FreeType License/GPLv2
 Group:		System/Libraries
 Url:		http://www.freetype.org/
 Source0:	http://downloads.sourceforge.net/freetype/%{name}-%{version}.tar.bz2
 Source1:	http://downloads.sourceforge.net/freetype/%{name}-doc-%{version}.tar.bz2
 Source2:	http://downloads.sourceforge.net/freetype/ft2demos-%{version}.tar.bz2
-Patch0:		ft2demos-2.3.12-mathlib.diff
 Patch1:		freetype-2.4.2-CVE-2010-3311.patch
-
 Patch2:		0001-Enable-table-validation-modules.patch
-Patch3:		0002-Enable-infinality-subpixel-hinting.patch
+# Enable subpixel rendering (ClearType)
+Patch3:		freetype-2.3.0-enable-spr.patch
 Patch4:		0003-Enable-long-PCF-family-names.patch
 
 BuildRequires:	pkgconfig(x11)
@@ -74,10 +73,6 @@ capabilities of the FreeType library.
 %prep
 %setup -q -a1 -a2
 
-pushd ft2demos-%{version}
-%patch0 -p0
-popd
-
 %patch1 -p1 -b .CVE-2010-3311
 %patch2 -p1
 %patch3 -p1
@@ -120,7 +115,7 @@ sed -i -e 's,^/\* #define FT_EXPORT_DEF(x).*,#define FT_EXPORT_DEF(x) __attribut
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' builds/unix/libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' builds/unix/libtool
 
-%make
+%make_build
 
 pushd ft2demos-%{version}
 # The purpose of overriding LINK_LIBRARY is getting rid of ****ing
@@ -133,7 +128,7 @@ LINK_LIBRARY='$(LIBTOOL) --mode=link $(CCraw) -o $@ $(OBJECTS_LIST) \
 popd
 
 %install
-%makeinstall_std
+%make_install
 
 install -d %{buildroot}%{_bindir}
 
