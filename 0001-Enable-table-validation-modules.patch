@@ -1,19 +1,19 @@
-diff -up freetype-2.9.1/modules.cfg.orig freetype-2.9.1/modules.cfg
---- freetype-2.9.1/modules.cfg.orig	2018-05-02 20:26:52.508752438 +0200
-+++ freetype-2.9.1/modules.cfg	2018-05-02 20:27:24.833968005 +0200
-@@ -120,7 +120,7 @@ AUX_MODULES += cache
+diff -up freetype-2.10.0/modules.cfg.2~ freetype-2.10.0/modules.cfg
+--- freetype-2.10.0/modules.cfg.2~	2019-03-15 12:52:00.781635550 +0100
++++ freetype-2.10.0/modules.cfg	2019-03-15 12:54:09.606353195 +0100
+@@ -111,7 +111,7 @@ AUX_MODULES += cache
+ 
  # TrueType GX/AAT table validation.  Needs `ftgxval.c' below.
  #
- # No FT_CONFIG_OPTION_PIC support.
 -# AUX_MODULES += gxvalid
 +AUX_MODULES += gxvalid
  
  # Support for streams compressed with gzip (files with suffix .gz).
  #
-@@ -143,7 +143,7 @@ AUX_MODULES += bzip2
+@@ -130,7 +130,7 @@ AUX_MODULES += bzip2
+ 
  # OpenType table validation.  Needs `ftotval.c' below.
  #
- # No FT_CONFIG_OPTION_PIC support.
 -# AUX_MODULES += otvalid
 +AUX_MODULES += otvalid
  

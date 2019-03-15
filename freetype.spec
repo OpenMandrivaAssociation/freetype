@@ -7,9 +7,9 @@
 
 Summary:	A free and portable TrueType font rendering engine
 Name:		freetype
-Version:	2.9.1
+Version:	2.10.0
 %define docver %(echo %version |cut -d. -f1-3)
-Release:	4
+Release:	1
 License:	FreeType License/GPLv2
 Group:		System/Libraries
 Url:		http://www.freetype.org/
@@ -18,9 +18,6 @@ Source1:	http://downloads.sourceforge.net/freetype/%{name}-doc-%{version}.tar.bz
 Source2:	http://downloads.sourceforge.net/freetype/ft2demos-%{version}.tar.bz2
 Patch1:		freetype-2.4.2-CVE-2010-3311.patch
 Patch2:		0001-Enable-table-validation-modules.patch
-# Enable subpixel rendering (ClearType)
-Patch3:		freetype-2.3.0-enable-spr.patch
-Patch4:		0003-Enable-long-PCF-family-names.patch
 
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(zlib)
@@ -71,13 +68,7 @@ demos package includes a set of useful small utilities showing various
 capabilities of the FreeType library.
 
 %prep
-%setup -q -a1 -a2
-
-%patch1 -p1 -b .CVE-2010-3311
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-
+%autosetup -p1 -a1 -a2
 enable() {
 	if [ "$#" = "1" ]; then
 		KEY=FT_CONFIG_OPTION_${1}
