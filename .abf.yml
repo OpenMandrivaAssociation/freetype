@@ -1,4 +1,4 @@
 sources:
-  freetype-2.10.0.tar.bz2: f6abf03e0e3189a0de883981c57d3861b5d314f5
-  freetype-doc-2.10.0.tar.bz2: 44c66dd52e65f1ceeb5863803cf0273d19aa4219
-  ft2demos-2.10.0.tar.bz2: a06c7149637122c71eb77d1aa07b037589a07882
+  freetype-2.10.1.tar.xz: 79874ef4eaa52025126b71d836453b8279bdd331
+  freetype-doc-2.10.1.tar.xz: 5a90bba4cd376129ce371bcb4da8acc5ca0dce05
+  ft2demos-2.10.1.tar.xz: bf5e24878c66404b765eab638783626d777a25ac
