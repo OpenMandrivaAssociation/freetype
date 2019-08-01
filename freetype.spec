@@ -3,7 +3,7 @@
 %define devname %mklibname -d freetype %{major}
 
 %define git_url git://git.sv.gnu.org/freetype/freetype2.git
-%bcond_with	harfbuzz
+%bcond_without	harfbuzz
 
 Summary:	A free and portable TrueType font rendering engine
 Name:		freetype
