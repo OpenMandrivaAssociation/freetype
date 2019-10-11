@@ -1,7 +1,7 @@
 %define major 6
 %define libname	%mklibname freetype %{major}
 %define devname %mklibname -d freetype %{major}
-
+%global optflags %{optlfags} -O3
 %define git_url git://git.sv.gnu.org/freetype/freetype2.git
 %bcond_without	harfbuzz
 
@@ -9,7 +9,7 @@ Summary:	A free and portable TrueType font rendering engine
 Name:		freetype
 Version:	2.10.1
 %define docver %(echo %version |cut -d. -f1-3)
-Release:	1
+Release:	2
 License:	FreeType License/GPLv2
 Group:		System/Libraries
 Url:		http://www.freetype.org/
@@ -21,7 +21,7 @@ Patch2:		0001-Enable-table-validation-modules.patch
 
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(zlib)
-BuildRequires:	bzip2-devel
+BuildRequires:	pkgconfig(bzip2)
 BuildRequires:	pkgconfig(libpng)
 %if %{with harfbuzz}
 BuildRequires:	pkgconfig(harfbuzz)
@@ -108,7 +108,7 @@ sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' builds/unix/libt
 
 %make_build
 
-pushd ft2demos-%{version}
+cd ft2demos-%{version}
 # The purpose of overriding LINK_LIBRARY is getting rid of ****ing
 # rpath
 %make TOP_DIR=".." X11_LIB="" \
@@ -116,7 +116,7 @@ LINK_LIBRARY='$(LIBTOOL) --mode=link $(CCraw) -o $@ $(OBJECTS_LIST) \
                           -version-info $(version_info) \
                            $(LDFLAGS) -no-undefined \
                            # -export-symbols $(EXPORTS_LIST)'
-popd
+cd -
 
 %install
 %make_install
