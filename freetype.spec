@@ -1,7 +1,7 @@
 %define major 6
 %define libname	%mklibname freetype %{major}
 %define devname %mklibname -d freetype %{major}
-%global optflags %{optlfags} -O3
+%global optflags %{optflags} -O3
 %define git_url git://git.sv.gnu.org/freetype/freetype2.git
 %bcond_without	harfbuzz
 
