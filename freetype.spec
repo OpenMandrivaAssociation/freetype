@@ -76,7 +76,7 @@ enable() {
     else
 	KEY=${1}_CONFIG_OPTION_${2}
     fi
-    sed -i -e "s|^/\* #define ${KEY} \*/|#define ${KEY}|" include/freetype/config/ftoption.h devel/ftoption.h
+    sed -i -e "s|^/\* #define ${KEY} \*/|#define ${KEY}|" include/freetype/config/ftoption.h devel/ftoption.h builds/unix/ftoption.h
 }
 disable() {
     if [ "$#" = "1" ]; then
@@ -84,7 +84,7 @@ disable() {
     else
 	KEY=${1}_CONFIG_OPTION_${2}
     fi
-    sed -i -e "s|^#define ${KEY}\$|/* #define ${KEY} */|" include/freetype/config/ftoption.h devel/ftoption.h
+    sed -i -e "s|^#define ${KEY}\$|/* #define ${KEY} */|" include/freetype/config/ftoption.h devel/ftoption.h builds/unix/ftoption.h
 }
 
 ./autogen.sh
@@ -103,7 +103,7 @@ enable SUBPIXEL_RENDERING
 enable PCF LONG_FAMILY_NAMES
 disable CFF OLD_ENGINE
 
-sed -i -e 's,^/\* #define FT_EXPORT_DEF(x).*,#define FT_EXPORT_DEF(x) __attribute__((visibility("default"))) x,' include/freetype/config/ftoption.h devel/ftoption.h
+sed -i -e 's,^/\* #define FT_EXPORT_DEF(x).*,#define FT_EXPORT_DEF(x) __attribute__((visibility("default"))) x,' include/freetype/config/ftoption.h devel/ftoption.h builds/unix/ftoption.h
 
 %build
 %make_build
