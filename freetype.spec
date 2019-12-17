@@ -69,6 +69,7 @@ capabilities of the FreeType library.
 
 %prep
 %autosetup -p1 -a1 -a2
+
 enable() {
     if [ "$#" = "1" ]; then
 	KEY=FT_CONFIG_OPTION_${1}

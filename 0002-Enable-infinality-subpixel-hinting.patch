@@ -10,21 +10,19 @@ Subject: [PATCH 2/4] Enable infinality subpixel hinting
  include/freetype/config/ftoption.h | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/freetype/config/ftoption.h b/include/freetype/config/ftoption.h
-index 06f3d50bb02fb5ac..e6f9720df9b5d004 100644
---- a/include/freetype/config/ftoption.h
-+++ b/include/freetype/config/ftoption.h
-@@ -654,8 +654,8 @@ FT_BEGIN_HEADER
-   /* [1] https://www.microsoft.com/typography/cleartype/truetypecleartype.aspx */
-   /*                                                                       */
+diff -Naur freetype-2.10.1/include/freetype/config/ftoption.h freetype-2.10.1.tpg/include/freetype/config/ftoption.h
+--- freetype-2.10.1/include/freetype/config/ftoption.h	2019-02-23 09:09:06.000000000 +0000
++++ freetype-2.10.1.tpg/include/freetype/config/ftoption.h	2019-12-17 12:27:38.882239079 +0000
+@@ -658,8 +658,8 @@
+    * https://www.microsoft.com/typography/cleartype/truetypecleartype.aspx
+    */
  /* #define TT_CONFIG_OPTION_SUBPIXEL_HINTING  1         */
 -#define TT_CONFIG_OPTION_SUBPIXEL_HINTING  2
 -/* #define TT_CONFIG_OPTION_SUBPIXEL_HINTING  ( 1 | 2 ) */
 +/* #define TT_CONFIG_OPTION_SUBPIXEL_HINTING  2         */
-+#define TT_CONFIG_OPTION_SUBPIXEL_HINTING     ( 1 | 2 )
++#define TT_CONFIG_OPTION_SUBPIXEL_HINTING  ( 1 | 2 )
  
  
-   /*************************************************************************/
--- 
+   /**************************************************************************
+--
 2.15.1
-
