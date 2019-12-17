@@ -1,15 +1,15 @@
 %define major 6
-%define libname	%mklibname freetype %{major}
+%define libname %mklibname freetype %{major}
 %define devname %mklibname -d freetype %{major}
 %global optflags %{optflags} -O3
 %define git_url git://git.sv.gnu.org/freetype/freetype2.git
-%bcond_without	harfbuzz
+%bcond_without harfbuzz
 
 Summary:	A free and portable TrueType font rendering engine
 Name:		freetype
 Version:	2.10.1
 %define docver %(echo %version |cut -d. -f1-3)
-Release:	2
+Release:	3
 License:	FreeType License/GPLv2
 Group:		System/Libraries
 Url:		http://www.freetype.org/
@@ -18,7 +18,7 @@ Source1:	http://downloads.sourceforge.net/freetype/%{name}-doc-%{version}.tar.xz
 Source2:	http://downloads.sourceforge.net/freetype/ft2demos-%{version}.tar.xz
 Patch1:		freetype-2.4.2-CVE-2010-3311.patch
 Patch2:		0001-Enable-table-validation-modules.patch
-
+Patch3:		0002-Enable-infinality-subpixel-hinting.patch
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(zlib)
 BuildRequires:	pkgconfig(bzip2)
@@ -70,42 +70,41 @@ capabilities of the FreeType library.
 %prep
 %autosetup -p1 -a1 -a2
 enable() {
-	if [ "$#" = "1" ]; then
-		KEY=FT_CONFIG_OPTION_${1}
-	else
-		KEY=${1}_CONFIG_OPTION_${2}
-	fi
-	sed -i -e "s|^/\* #define ${KEY} \*/|#define ${KEY} 1|" include/freetype/config/ftoption.h devel/ftoption.h
+    if [ "$#" = "1" ]; then
+	KEY=FT_CONFIG_OPTION_${1}
+    else
+	KEY=${1}_CONFIG_OPTION_${2}
+    fi
+    sed -i -e "s|^/\* #define ${KEY} \*/|#define ${KEY}|" include/freetype/config/ftoption.h devel/ftoption.h
 }
 disable() {
-	if [ "$#" = "1" ]; then
-		KEY=FT_CONFIG_OPTION_${1}
-	else
-		KEY=${1}_CONFIG_OPTION_${2}
-	fi
-	sed -i -e "s|^#define ${KEY}\$|/* #define ${KEY} */|" include/freetype/config/ftoption.h devel/ftoption.h
+    if [ "$#" = "1" ]; then
+	KEY=FT_CONFIG_OPTION_${1}
+    else
+	KEY=${1}_CONFIG_OPTION_${2}
+    fi
+    sed -i -e "s|^#define ${KEY}\$|/* #define ${KEY} */|" include/freetype/config/ftoption.h devel/ftoption.h
 }
 
-%configure --enable-freetype-config
+./autogen.sh
+%configure \
+	--enable-freetype-config \
+%if %{with harfbuzz}
+	--with-harfbuzz=yes \
+%else
+	--with-harfbuzz=no \
+%endif
+	--with-zlib=yes \
+	--with-bzip2=yes \
+	--with-png=yes
 
 enable SUBPIXEL_RENDERING
-enable SYSTEM_ZLIB
-enable USE_BZIP2
-enable USE_PNG
-enable USE_HARFBUZZ
 enable PCF LONG_FAMILY_NAMES
-
 disable CFF OLD_ENGINE
 
 sed -i -e 's,^/\* #define FT_EXPORT_DEF(x).*,#define FT_EXPORT_DEF(x) __attribute__((visibility("default"))) x,' include/freetype/config/ftoption.h devel/ftoption.h
 
-#./autogen.sh --help || :
-
 %build
-# (tpg) remove rpath
-sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' builds/unix/libtool
-sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' builds/unix/libtool
-
 %make_build
 
 cd ft2demos-%{version}
@@ -124,7 +123,7 @@ cd -
 install -d %{buildroot}%{_bindir}
 
 for ftdemo in ftbench ftdiff ftdump ftgamma ftgrid ftlint ftmulti ftstring ftvalid ftview; do
-	builds/unix/libtool --mode=install install -m 755 ft2demos-%{docver}/bin/$ftdemo %{buildroot}%{_bindir}
+    builds/unix/libtool --mode=install install -m 755 ft2demos-%{docver}/bin/$ftdemo %{buildroot}%{_bindir}
 done
 
 # compatibility symlink
@@ -155,4 +154,3 @@ ln -sf freetype2 %{buildroot}%{_includedir}/freetype
 %{_bindir}/ftstring
 %{_bindir}/ftvalid
 %{_bindir}/ftview
-
