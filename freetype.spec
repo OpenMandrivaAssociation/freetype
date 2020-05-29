@@ -1,6 +1,15 @@
+# wine and several of its dependencies use freetype
+%ifarch %{x86_64}
+%bcond_without compat32
+%else
+%bcond_with compat32
+%endif
+
 %define major 6
 %define libname %mklibname freetype %{major}
 %define devname %mklibname -d freetype %{major}
+%define lib32name %mklib32name freetype %{major}
+%define dev32name %mklib32name -d freetype %{major}
 %global optflags %{optflags} -O3
 %define git_url git://git.sv.gnu.org/freetype/freetype2.git
 %bcond_without harfbuzz
@@ -9,7 +18,7 @@ Summary:	A free and portable TrueType font rendering engine
 Name:		freetype
 Version:	2.10.2
 %define docver %(echo %version |cut -d. -f1-3)
-Release:	1
+Release:	2
 License:	FreeType License/GPLv2
 Group:		System/Libraries
 Url:		http://www.freetype.org/
@@ -30,6 +39,12 @@ BuildRequires:	pkgconfig(libpng)
 BuildRequires:	pkgconfig(harfbuzz)
 %endif
 BuildRequires:	pkgconfig(graphite2)
+%if %{with compat32}
+BuildRequires:	devel(libX11)
+BuildRequires:	devel(libz)
+BuildRequires:	devel(libbz2)
+BuildRequires:	devel(libpng16)
+%endif
 
 %description
 The FreeType2 engine is a free and portable TrueType font rendering engine.
@@ -70,8 +85,33 @@ provide advanced font support for a variety of platforms and environments. The
 demos package includes a set of useful small utilities showing various
 capabilities of the FreeType library.
 
+%if %{with compat32}
+%package -n %{lib32name}
+Summary:	Shared libraries for a free and portable TrueType font rendering engine (32-bit)
+Group:		System/Libraries
+
+%description -n %{lib32name}
+The FreeType2 engine is a free and portable TrueType font rendering
+engine.  It has been developed to provide TT support to a great
+variety of platforms and environments. Note that FreeType2 is a
+library, not a stand-alone application, though some utility
+applications are included
+
+%package -n %{dev32name}
+Summary:	Header files and static library for development with FreeType2 (32-bit)
+Group:		Development/C
+Requires:	%{devname} = %{version}-%{release}
+Requires:	%{lib32name} = %{version}-%{release}
+
+%description -n %{dev32name}
+This package is only needed if you intend to develop or compile applications
+which rely on the FreeType2 library. If you simply want to run existing
+applications, you won't need this package.
+%endif
+
 %prep
 %autosetup -p1 -a1 -a2
+ln -s ft2demos-%{version} ft2demos
 
 enable() {
     if [ "$#" = "1" ]; then
@@ -79,7 +119,7 @@ enable() {
     else
 	KEY=${1}_CONFIG_OPTION_${2}
     fi
-    sed -i -e "s|^/\* #define ${KEY} \*/|#define ${KEY}|" include/freetype/config/ftoption.h devel/ftoption.h builds/unix/ftoption.h
+    sed -i -e "s|^/\* #define ${KEY} \*/|#define ${KEY}|" ftoption.h ../include/freetype/config/ftoption.h ../devel/ftoption.h
 }
 disable() {
     if [ "$#" = "1" ]; then
@@ -87,10 +127,40 @@ disable() {
     else
 	KEY=${1}_CONFIG_OPTION_${2}
     fi
-    sed -i -e "s|^#define ${KEY}\$|/* #define ${KEY} */|" include/freetype/config/ftoption.h devel/ftoption.h builds/unix/ftoption.h
+    sed -i -e "s|^#define ${KEY}\$|/* #define ${KEY} */|" ftoption.h ../include/freetype/config/ftoption.h ../devel/ftoption.h
 }
 
 ./autogen.sh
+
+export CONFIGURE_TOP="$(pwd)"
+touch configure.ac
+
+%if %{with compat32}
+mkdir build32
+cd build32
+# FIXME Enable harfbuzz even in 32-bit mode
+# once it is built
+%configure32 \
+	--enable-freetype-config \
+%if %{with harfbuzz}
+	--with-harfbuzz=no \
+%else
+	--with-harfbuzz=no \
+%endif
+	--with-zlib=yes \
+	--with-bzip2=yes \
+	--with-png=yes
+
+enable SUBPIXEL_RENDERING
+enable PCF LONG_FAMILY_NAMES
+disable CFF OLD_ENGINE
+
+sed -i -e 's,^/\* #define FT_EXPORT_DEF(x).*,#define FT_EXPORT_DEF(x) __attribute__((visibility("default"))) x,' ftoption.h ../include/freetype/config/ftoption.h ../devel/ftoption.h
+cd ..
+%endif
+
+mkdir build
+cd build
 %configure \
 	--enable-freetype-config \
 %if %{with harfbuzz}
@@ -106,28 +176,25 @@ enable SUBPIXEL_RENDERING
 enable PCF LONG_FAMILY_NAMES
 disable CFF OLD_ENGINE
 
-sed -i -e 's,^/\* #define FT_EXPORT_DEF(x).*,#define FT_EXPORT_DEF(x) __attribute__((visibility("default"))) x,' include/freetype/config/ftoption.h devel/ftoption.h builds/unix/ftoption.h
+sed -i -e 's,^/\* #define FT_EXPORT_DEF(x).*,#define FT_EXPORT_DEF(x) __attribute__((visibility("default"))) x,' ftoption.h ../include/freetype/config/ftoption.h ../devel/ftoption.h
 
 %build
-%make_build
-
-cd ft2demos-%{version}
-# The purpose of overriding LINK_LIBRARY is getting rid of ****ing
-# rpath
-%make TOP_DIR=".." X11_LIB="" \
-LINK_LIBRARY='$(LIBTOOL) --mode=link $(CCraw) -o $@ $(OBJECTS_LIST) \
-                          -version-info $(version_info) \
-                           $(LDFLAGS) -no-undefined \
-                           # -export-symbols $(EXPORTS_LIST)'
-cd -
+%if %{with compat32}
+%make_build -C build32
+%endif
+%make_build -C build
+%make_build -C build FT2DEMOS=1 TOP_DIR_2=$(realpath ./ft2demos)
 
 %install
-%make_install
+%if %{with compat32}
+%make_install -C build32
+%endif
+%make_install -C build
 
 install -d %{buildroot}%{_bindir}
 
 for ftdemo in ftbench ftdiff ftdump ftgamma ftgrid ftlint ftmulti ftstring ftvalid ftview; do
-    builds/unix/libtool --mode=install install -m 755 ft2demos-%{docver}/bin/$ftdemo %{buildroot}%{_bindir}
+    build/libtool --mode=install install -m 755 ft2demos-%{docver}/bin/$ftdemo %{buildroot}%{_bindir}
 done
 
 # compatibility symlink
@@ -158,3 +225,12 @@ ln -sf freetype2 %{buildroot}%{_includedir}/freetype
 %{_bindir}/ftstring
 %{_bindir}/ftvalid
 %{_bindir}/ftview
+
+%if %{with compat32}
+%files -n %{lib32name}
+%{_prefix}/lib/libfreetype.so.%{major}*
+
+%files -n %{dev32name}
+%{_prefix}/lib/*.so
+%{_prefix}/lib/pkgconfig/*
+%endif
