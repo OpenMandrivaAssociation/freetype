@@ -1,8 +1,10 @@
---- freetype-2.3.0/include/freetype/config/ftoption.h.spf	2007-01-18 14:27:34.000000000 -0500
-+++ freetype-2.3.0/include/freetype/config/ftoption.h	2007-01-18 14:27:48.000000000 -0500
-@@ -92,7 +92,7 @@
-    * macro is not defined, FreeType offers alternative LCD rendering
-    * technology that produces excellent output without LCD filtering.
+diff --git a/include/freetype/config/ftoption.h b/include/freetype/config/ftoption.h
+index 047ae07..acb4d6d 100644
+--- a/include/freetype/config/ftoption.h
++++ b/include/freetype/config/ftoption.h
+@@ -124,7 +124,7 @@ FT_BEGIN_HEADER
+    * When this macro is not defined, FreeType offers alternative LCD
+    * rendering technology that produces excellent output.
     */
 -/* #define FT_CONFIG_OPTION_SUBPIXEL_RENDERING */
 +#define FT_CONFIG_OPTION_SUBPIXEL_RENDERING

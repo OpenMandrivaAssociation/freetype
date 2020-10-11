@@ -16,9 +16,9 @@
 
 Summary:	A free and portable TrueType font rendering engine
 Name:		freetype
-Version:	2.10.2
+Version:	2.10.3
 %define docver %(echo %version |cut -d. -f1-3)
-Release:	2
+Release:	1
 License:	FreeType License/GPLv2
 Group:		System/Libraries
 Url:		http://www.freetype.org/
