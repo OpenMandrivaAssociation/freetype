@@ -16,7 +16,7 @@
 
 Summary:	A free and portable TrueType font rendering engine
 Name:		freetype
-Version:	2.10.4
+Version:	2.11.0
 %define docver %(echo %version |cut -d. -f1-3)
 Release:	1
 License:	FreeType License/GPLv2
@@ -25,6 +25,7 @@ Url:		http://www.freetype.org/
 Source0:	http://downloads.sourceforge.net/freetype/%{name}-%{version}.tar.xz
 Source1:	http://downloads.sourceforge.net/freetype/%{name}-doc-%{version}.tar.xz
 Source2:	http://downloads.sourceforge.net/freetype/ft2demos-%{version}.tar.xz
+Patch0:		freetype-2.11-autogen.patch
 Patch1:		freetype-2.4.2-CVE-2010-3311.patch
 Patch2:		0001-Enable-table-validation-modules.patch
 Patch3:		0002-Enable-infinality-subpixel-hinting.patch

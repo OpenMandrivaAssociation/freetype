@@ -1,0 +1,12 @@
+diff -up freetype-2.11.0/autogen.sh.omv~ freetype-2.11.0/autogen.sh
+--- freetype-2.11.0/autogen.sh.omv~	2021-08-09 01:29:52.250990528 +0200
++++ freetype-2.11.0/autogen.sh	2021-08-09 01:33:31.078260428 +0200
+@@ -169,6 +169,8 @@ cd ../..
+ 
+ chmod +x ./configure
+ 
++exit 0
++
+ # Copy all necessary 'dlg' files.
+ copy_submodule_files ()
+ {
