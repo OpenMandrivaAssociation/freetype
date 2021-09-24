@@ -1,0 +1,60 @@
+From 30a82e1e5db9585ddde91c60a645cfb3356541e0 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Dominik=20R=C3=B6ttsches?= <drott@chromium.org>
+Date: Mon, 26 Jul 2021 18:28:56 +0300
+Subject: [PATCH] [sfnt] 'COLR' v1 PaintSweepGradient spec update
+
+* src/sfnt/ttcolr.c (read_paint): PaintSweepGradient follows other
+spec changes and now has the angles specified as F2DOT14, reflect
+that in the implementation.
+* include/freetype/ftcolor.h (FT_PaintSweepGradient): Update
+documentation.
+---
+ include/freetype/ftcolor.h | 14 ++++++++------
+ src/sfnt/ttcolr.c          |  4 ++--
+ 2 files changed, 10 insertions(+), 8 deletions(-)
+
+diff --git a/include/freetype/ftcolor.h b/include/freetype/ftcolor.h
+index 43e463e98..a4bd62a26 100644
+--- a/include/freetype/ftcolor.h
++++ b/include/freetype/ftcolor.h
+@@ -965,14 +965,16 @@ FT_BEGIN_HEADER
+    *     The center of the sweep gradient (in font units).
+    *
+    *   start_angle ::
+-   *     The start angle of the sweep gradient, in 16.16 fixed point format
+-   *     specifying degrees.  Values are given counter-clockwise, starting
+-   *     from the (positive) y~axis.
++   *     The start angle of the sweep gradient, in 16.16 fixed point
++   *     format specifying degrees divided by 180.0 (as in the
++   *     spec).  Multiply by 180.0f to receive degrees value.  Values are
++   *     given counter-clockwise, starting from the (positive) y~axis.
+    *
+    *   end_angle ::
+-   *     The end angle of the sweep gradient, in 16.16 fixed point format
+-   *     specifying degrees.  Values are given counter-clockwise, starting
+-   *     from the (positive) y~axis.
++   *     The end angle of the sweep gradient, in 16.16 fixed point
++   *     format specifying degrees divided by 180.0 (as in the
++   *     spec).  Multiply by 180.0f to receive degrees value.  Values are
++   *     given counter-clockwise, starting from the (positive) y~axis.
+    *
+    * @since:
+    *   2.11 -- **currently experimental only!**  There might be changes
+diff --git a/src/sfnt/ttcolr.c b/src/sfnt/ttcolr.c
+index 3970a5dc5..601d88a55 100644
+--- a/src/sfnt/ttcolr.c
++++ b/src/sfnt/ttcolr.c
+@@ -531,8 +531,8 @@
+       apaint->u.sweep_gradient.center.x = FT_NEXT_SHORT( p );
+       apaint->u.sweep_gradient.center.y = FT_NEXT_SHORT( p );
+ 
+-      apaint->u.sweep_gradient.start_angle = FT_NEXT_LONG( p );
+-      apaint->u.sweep_gradient.end_angle = FT_NEXT_LONG( p );
++      apaint->u.sweep_gradient.start_angle = FT_NEXT_SHORT( p ) << 2;
++      apaint->u.sweep_gradient.end_angle = FT_NEXT_SHORT( p ) << 2;
+ 
+       return 1;
+     }
+-- 
+GitLab
+

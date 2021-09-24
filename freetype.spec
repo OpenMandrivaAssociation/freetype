@@ -18,7 +18,7 @@ Summary:	A free and portable TrueType font rendering engine
 Name:		freetype
 Version:	2.11.0
 %define docver %(echo %version |cut -d. -f1-3)
-Release:	1
+Release:	2
 License:	FreeType License/GPLv2
 Group:		System/Libraries
 Url:		http://www.freetype.org/
@@ -31,6 +31,13 @@ Patch2:		0001-Enable-table-validation-modules.patch
 Patch3:		0002-Enable-infinality-subpixel-hinting.patch
 # Enable subpixel rendering (ClearType)
 Patch4:		freetype-2.3.0-enable-spr.patch
+# Patches from upstream that are already being relied upon
+# by chromium
+Patch50:	https://gitlab.freedesktop.org/freetype/freetype/-/commit/48df0fa6522f078498d3be92686522b1a512481f.patch
+Patch51:	https://gitlab.freedesktop.org/freetype/freetype/-/commit/66189807b8f42411d981bc7d2a3cc7f753cf22ae.patch
+Patch52:	https://gitlab.freedesktop.org/freetype/freetype/-/commit/30a82e1e5db9585ddde91c60a645cfb3356541e0.patch
+Patch53:	https://gitlab.freedesktop.org/freetype/freetype/-/commit/47cf8ebf4a78ed42da455a98d77a92ce6a180d78.patch
+Patch54:	https://gitlab.freedesktop.org/freetype/freetype/-/commit/e40ae7569aa4ef591f66ff9066df2f91de75bb77.patch
 
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(zlib)
@@ -137,7 +144,7 @@ export CONFIGURE_TOP="$(pwd)"
 touch configure.ac
 
 %if %{with compat32}
-mkdir build32
+mkdir -p build32/lib
 cd build32
 # FIXME Enable harfbuzz even in 32-bit mode
 # once it is built
