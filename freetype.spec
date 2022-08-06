@@ -18,7 +18,7 @@ Summary:	A free and portable TrueType font rendering engine
 Name:		freetype
 Version:	2.12.1
 %define docver %(echo %version |cut -d. -f1-3)
-Release:	1
+Release:	2
 License:	FreeType License/GPLv2
 Group:		System/Libraries
 Url:		http://www.freetype.org/
@@ -35,6 +35,8 @@ BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(zlib)
 BuildRequires:	pkgconfig(bzip2)
 BuildRequires:	pkgconfig(libpng)
+BuildRequires:	pkgconfig(libbrotlidec)
+BuildRequires:	pkgconfig(librsvg-2.0)
 %if %{with harfbuzz}
 BuildRequires:	pkgconfig(harfbuzz)
 %endif
@@ -168,6 +170,8 @@ cd build
 %else
 	--with-harfbuzz=no \
 %endif
+	--with-brotli=yes \
+	--with-librsvg=yes \
 	--with-zlib=yes \
 	--with-bzip2=yes \
 	--with-png=yes
