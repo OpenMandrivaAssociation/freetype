@@ -10,7 +10,13 @@
 %define devname %mklibname -d freetype %{major}
 %define lib32name %mklib32name freetype %{major}
 %define dev32name %mklib32name -d freetype %{major}
+%ifarch x86_64
+# Workaround for x86_64 (not znver1) specific clang breakage at build time
+# https://abf.openmandriva.org/build_lists/289816
+%global optflags %{optflags} -O1
+%else
 %global optflags %{optflags} -O3
+%endif
 %define git_url git://git.sv.gnu.org/freetype/freetype2.git
 %bcond_without harfbuzz
 
