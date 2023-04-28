@@ -24,7 +24,7 @@ Summary:	A free and portable TrueType font rendering engine
 Name:		freetype
 Version:	2.13.0
 %define docver %(echo %version |cut -d. -f1-3)
-Release:	2
+Release:	3
 License:	FreeType License/GPLv2
 Group:		System/Libraries
 Url:		http://www.freetype.org/
@@ -110,6 +110,7 @@ Summary:	Header files and static library for development with FreeType2 (32-bit)
 Group:		Development/C
 Requires:	%{devname} = %{version}-%{release}
 Requires:	%{lib32name} = %{version}-%{release}
+Requires:	devel(libbz2)
 
 %description -n %{dev32name}
 This package is only needed if you intend to develop or compile applications
