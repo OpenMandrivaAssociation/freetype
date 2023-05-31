@@ -19,6 +19,7 @@
 %endif
 %define git_url git://git.sv.gnu.org/freetype/freetype2.git
 %bcond_without harfbuzz
+%bcond_without rsvg
 
 Summary:	A free and portable TrueType font rendering engine
 Name:		freetype
@@ -42,7 +43,9 @@ BuildRequires:	pkgconfig(zlib)
 BuildRequires:	pkgconfig(bzip2)
 BuildRequires:	pkgconfig(libpng)
 BuildRequires:	pkgconfig(libbrotlidec)
+%if %{with rsvg}
 BuildRequires:	pkgconfig(librsvg-2.0)
+%endif
 %if %{with harfbuzz}
 BuildRequires:	pkgconfig(harfbuzz)
 %endif
@@ -178,7 +181,9 @@ cd build
 	--with-harfbuzz=no \
 %endif
 	--with-brotli=yes \
+%if %{with rsvg}
 	--with-librsvg=yes \
+%endif
 	--with-zlib=yes \
 	--with-bzip2=yes \
 	--with-png=yes
