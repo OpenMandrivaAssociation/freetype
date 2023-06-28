@@ -23,9 +23,9 @@
 
 Summary:	A free and portable TrueType font rendering engine
 Name:		freetype
-Version:	2.13.0
+Version:	2.13.1
 %define docver %(echo %version |cut -d. -f1-3)
-Release:	3
+Release:	1
 License:	FreeType License/GPLv2
 Group:		System/Libraries
 Url:		http://www.freetype.org/
@@ -34,7 +34,6 @@ Source1:	http://downloads.sourceforge.net/freetype/%{name}-doc-%{version}.tar.xz
 Source2:	http://downloads.sourceforge.net/freetype/ft2demos-%{version}.tar.xz
 Patch0:		freetype-2.11-autogen.patch
 Patch2:		0001-Enable-table-validation-modules.patch
-Patch3:		0002-Enable-infinality-subpixel-hinting.patch
 # Enable subpixel rendering (ClearType)
 Patch4:		freetype-2.3.0-enable-spr.patch
 
@@ -166,6 +165,7 @@ cd build32
 enable SUBPIXEL_RENDERING
 enable PCF LONG_FAMILY_NAMES
 disable CFF OLD_ENGINE
+enable SYSTEM_ZLIB
 
 sed -i -e 's,^/\* #define FT_EXPORT_DEF(x).*,#define FT_EXPORT_DEF(x) __attribute__((visibility("default"))) x,' ftoption.h ../include/freetype/config/ftoption.h ../devel/ftoption.h
 cd ..
@@ -191,6 +191,7 @@ cd build
 enable SUBPIXEL_RENDERING
 enable PCF LONG_FAMILY_NAMES
 disable CFF OLD_ENGINE
+enable SYSTEM_ZLIB
 
 sed -i -e 's,^/\* #define FT_EXPORT_DEF(x).*,#define FT_EXPORT_DEF(x) __attribute__((visibility("default"))) x,' ftoption.h ../include/freetype/config/ftoption.h ../devel/ftoption.h
 
