@@ -153,11 +153,7 @@ cd build32
 # once it is built
 %configure32 \
 	--enable-freetype-config \
-%if %{with harfbuzz}
 	--with-harfbuzz=no \
-%else
-	--with-harfbuzz=no \
-%endif
 	--with-zlib=yes \
 	--with-bzip2=yes \
 	--with-png=yes
@@ -183,6 +179,8 @@ cd build
 	--with-brotli=yes \
 %if %{with rsvg}
 	--with-librsvg=yes \
+%else
+	--with-librsvg=no \
 %endif
 	--with-zlib=yes \
 	--with-bzip2=yes \
