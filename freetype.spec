@@ -28,7 +28,7 @@ Version:	2.13.3
 Release:	1
 License:	FreeType License/GPLv2
 Group:		System/Libraries
-Url:		http://www.freetype.org/
+Url:		https://www.freetype.org/
 Source0:	http://downloads.sourceforge.net/freetype/%{name}-%{version}.tar.xz
 Source1:	http://downloads.sourceforge.net/freetype/%{name}-doc-%{version}.tar.xz
 Source2:	http://downloads.sourceforge.net/freetype/ft2demos-%{version}.tar.xz
