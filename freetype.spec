@@ -37,6 +37,11 @@ Patch2:		0001-Enable-table-validation-modules.patch
 # Enable subpixel rendering (ClearType)
 Patch4:		freetype-2.3.0-enable-spr.patch
 
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(zlib)
 BuildRequires:	pkgconfig(bzip2)
