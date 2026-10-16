@@ -25,7 +25,7 @@ Summary:	A free and portable TrueType font rendering engine
 Name:		freetype
 Version:	2.15.0
 %define docver %(echo %version |cut -d. -f1-3)
-Release:	1
+Release:	2
 License:	FreeType License/GPLv2
 Group:		System/Libraries
 Url:		https://www.freetype.org/
@@ -58,6 +58,12 @@ BuildRequires:	devel(libX11)
 BuildRequires:	devel(libz)
 BuildRequires:	devel(libbz2)
 BuildRequires:	devel(libpng16)
+# clang -m32 links against the i686 sysroot, which is not in the default chroot.
+BuildRequires:	cross-i686-openmandriva-linux-gnu-clang
+BuildRequires:	cross-i686-openmandriva-linux-gnu-libc
+BuildRequires:	cross-i686-openmandriva-linux-gnu-gcc
+BuildRequires:	cross-i686-openmandriva-linux-gnu-binutils
+BuildRequires:	cross-i686-openmandriva-linux-gnu-kernel-headers
 %endif
 
 %description
